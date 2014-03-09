@@ -42,6 +42,10 @@ class My_table
         	site_id INT(11)
       	)
     	")
+		
+			# Truncate table
+			con.query("TRUNCATE TABLE AacflmDirector")
+			con.query("TRUNCATE TABLE AacflmDirection")
 
   	rescue Mysql::Error => e
     	puts e.errno
@@ -101,10 +105,65 @@ class My_table
     ensure
       con.close if con
     end
+	end # End insert_AacflmDirection
 
-	end
+	
+	def insert_AacflmDirector(slug, name, bio_markup, created_on, page_id, id, bio, site_id)	
+		begin
+      con = Mysql.new @host, @user, @pass, @db
 
+		  stmt = con.prepare("
+				INSERT INTO \
+				AacflmDirector
+				(
+					slug,
+					name,
+					bio_markup,
+					created_on,
+					
+					page_id,
+					id,
+					bio,
+					site_id
+				)	
+				VALUES
+				(
+					?,				
+					?,
+					?,
+					?,
 
-end
+					?,
+					?,
+					?,
+					?
+				)
+			")
+
+		  stmt.execute(
+				slug,
+				name,
+				bio_markup,
+				created_on,
+				
+				page_id,
+				id,
+				bio,
+				site_id
+			)
+
+		rescue Mysql::Error => e
+      puts e.errno
+      puts e.error
+
+    ensure
+      con.close if con
+    end
+
+	end # End insert_AacflmDirector
+	
+	
+	
+end # End class
 
 

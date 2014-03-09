@@ -1,0 +1,3 @@
+class CttPage
+
+end

@@ -1,0 +1,3 @@
+class CttRecipient
+
+end

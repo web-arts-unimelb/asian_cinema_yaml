@@ -1,0 +1,3 @@
+class SchPage
+
+end

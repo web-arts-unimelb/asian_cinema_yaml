@@ -1,0 +1,3 @@
+class Pathprint
+
+end
