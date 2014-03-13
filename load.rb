@@ -41,9 +41,8 @@ my_table = My_table.new host, user, pass, db
 my_table.create
 
 
-#SITE_PATH = '/var/www/test/testme/asian_cinema/tmp_orig.yml'
 SITE_PATH = '/var/www/test/testme/asian_cinema/site.yml'
-site_path = File.open( SITE_PATH )
+site_path = File.open(SITE_PATH)
 YAML::load_stream(site_path) { |doc|
 	if doc.class.to_s == 'AacflmDirection'
 		
@@ -71,6 +70,29 @@ YAML::load_stream(site_path) { |doc|
   	site_id = doc.attributes['site_id']
 
 		my_table.insert_AacflmDirector slug, name, bio_markup, created_on, page_id, id, bio, site_id
+	
+	elsif doc.class.to_s == 'AacflmFilm'
+		
+		slug = doc.attributes['slug']
+		synopsis_markup = doc.attributes['synopsis_markup']
+		category = doc.attributes['category']
+		created_on = doc.attributes['created_on']
+		
+		title = doc.attributes['title']
+		notes = doc.attributes['notes']
+		page_id = doc.attributes['page_id']
+		country_of_origin = doc.attributes['country_of_origin']		
+		
+		id = doc.attributes['id']
+		year = doc.attributes['year']
+		notes_markup = doc.attributes['notes_markup']
+		synopsis = doc.attributes['synopsis']
+		site_id = doc.attributes['site_id']
+		
+		#test
+		#puts synopsis_markup.encoding
+		
+		my_table.insert_AacflmFilm slug, synopsis_markup, category, created_on, title, notes, page_id, country_of_origin, id, year, notes_markup, synopsis, site_id
 			
 	else
 		puts 'last'

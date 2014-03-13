@@ -1,3 +1,5 @@
+
+
 # Class 
 # http://zetcode.com/db/mysqlrubytutorial/
 class My_table
@@ -14,6 +16,22 @@ class My_table
   	begin
     	con = Mysql.new @host, @user, @pass, @db 
 		
+			# ENGINE=InnoDB DEFAULT CHARSET=utf8?
+			con.query("
+      	CREATE TABLE IF NOT EXISTS \
+      	AacflmDirection(
+        	local_id INT PRIMARY KEY AUTO_INCREMENT, 
+        	position VARCHAR(255),
+        	film_id INT(11),
+        	created_on DATE,
+        	
+        	page_id INT(11),
+        	director_id INT(11),
+        	id INT(11),
+        	site_id INT(11)
+      	) ENGINE=InnoDB DEFAULT CHARSET=utf8
+    	")
+		
 			con.query("
         CREATE TABLE IF NOT EXISTS \
         AacflmDirector(
@@ -21,31 +39,45 @@ class My_table
          	slug VARCHAR(255),
 					name VARCHAR(255),
 					bio_markup TEXT, 
+					
 					created_on DATE,
 					page_id INT(11),
 					id INT(11),
-					bio INT(11),
+					bio TEXT,
+					
 					site_id INT(11) 
-        )
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8
       ")
 
     	con.query("
-      	CREATE TABLE IF NOT EXISTS \
-      	AacflmDirection(
-        	local_id INT PRIMARY KEY AUTO_INCREMENT, 
-        	position VARCHAR(255),
-        	film_id INT(11),
-        	created_on DATE,
-        	page_id INT(11),
-        	director_id INT(11),
-        	id INT(11),
-        	site_id INT(11)
-      	)
-    	")
+        CREATE TABLE IF NOT EXISTS \
+        AacflmFilm(
+          local_id INT PRIMARY KEY AUTO_INCREMENT, 
+         	slug VARCHAR(255),
+					synopsis_markup TEXT,
+					category VARCHAR(255),
+					
+					created_on DATE,
+					title VARCHAR(255),
+					notes TEXT,
+					page_id VARCHAR(255),
+					
+					country_of_origin VARCHAR(255),
+					id INT(11),
+					year VARCHAR(255),
+					notes_markup TEXT,
+					
+					synopsis TEXT,
+					site_id INT(11)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+      ")
+    	
 		
 			# Truncate table
+			con.query("TRUNCATE TABLE AacflmDirection")	
 			con.query("TRUNCATE TABLE AacflmDirector")
-			con.query("TRUNCATE TABLE AacflmDirection")
+			con.query("TRUNCATE TABLE AacflmFilm")
+			
 
   	rescue Mysql::Error => e
     	puts e.errno
@@ -163,6 +195,100 @@ class My_table
 	end # End insert_AacflmDirector
 	
 	
+	def insert_AacflmFilm(slug, synopsis_markup, category, created_on, title, notes, page_id, country_of_origin, id, year, notes_markup, synopsis, site_id)	
+		begin
+      con = Mysql.new @host, @user, @pass, @db
+
+		  stmt = con.prepare("
+				INSERT INTO \
+				AacflmFilm
+				(
+					slug,
+					synopsis_markup,
+					category,
+					created_on,
+					
+					title,
+					notes,
+					page_id,
+					country_of_origin,
+					
+					id,
+					year,
+					notes_markup,
+					synopsis,
+					site_id
+				)	
+				VALUES
+				(
+					?,				
+					?,
+					?,
+					?,
+
+					?,
+					?,
+					?,
+					?,
+					
+					?,
+					?,
+					?,
+					?,
+					?
+				)
+			")
+
+			# Here we remove <p> </p> around the synopsis_markup
+			# We assume the text is like <p>plain text ....</p>
+			# Work around
+			synopsis_markup = synopsis_markup.gsub(%r{</?[^>]+?>}, '')
+			synopsis_markup = '&lt;p&gt;' + synopsis_markup + '&lt;/p&gt;' 
+
+		  stmt.execute(
+				slug,
+				synopsis_markup,
+				category,
+				created_on,
+				
+				title,
+				notes,
+				page_id,
+				country_of_origin,
+				
+				id,
+				year,
+				notes_markup,
+				synopsis,
+				site_id
+			)
+
+		rescue Mysql::Error => e
+      puts e.errno
+      puts e.error
+
+    ensure
+      con.close if con
+    end
+
+	end # End insert_AacflmFilm
+	
+
+=begin	
+	def my_conv(s)
+		s = s.gsub("\xe2\x80\x9c", '"')
+    s = s.gsub("\xe2\x80\x9d", '"')
+    s = s.gsub("\xe2\x80\x98", "'")
+    s = s.gsub("\xe2\x80\x99", "'")
+    s = s.gsub("\xe2\x80\x93", "-")
+    s = s.gsub("\xe2\x80\x94", "--")
+    s = s.gsub("\xe2\x80\xa6", "...")
+    #s = Iconv.conv('UTF-8//IGNORE', 'UTF-8', s)
+		s = s.encode('UTF-16', :invalid => :replace, :replace => '').encode('UTF-8')
+	
+		return s
+	end
+=end	
 	
 end # End class
 

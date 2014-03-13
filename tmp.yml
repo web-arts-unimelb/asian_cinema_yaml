@@ -1,13 +1,35 @@
---- !ruby/object:AacflmDirection
-attributes:
-  position: "1"
-  film_id: "1"
-  created_on: 2012-02-06 09:31:31
+--- !ruby/object:AacflmFilm 
+assets: 
+attributes: 
+  slug: goodbye-revolution
+  synopsis_markup: "<p>Shen Jiawei, one of Australia\xE2\x80\x99s foremost painters, was born in Shanghai a year before the Chinese Communist Party came to power in 1949. Forty years later, Shen moved to Australia, at the time of both the Tiananmen Square uprising and the birth of his daughter, Sydney.</p>\n\n\
+    <p>Now, nearly twenty years later &ndash; Shen Jiawei is taking us back to China. It is a journey of rediscovery and reflection, a journey through which we\xE2\x80\x99ll get to know and admire a unique and interesting artist. As well, Shen will give us a personal and intimate insight into a China that is still a mystery to most Westerners.</p>\n\n\
+    <p>From being a Red Guard during Mao&rsquo;s Cultural Revolution, to painting tourists at Darling Harbour, to being Artist in Residence at Sydney Grammar, to living near the sunny shores of idyllic Bundeena, Shen Jiawei has come a long way. It is a journey vigorously signposted and reflected through many paintings and photographs.</p>\n\n\
+    <p>From his earliest sketches and teenage watercolours, to the hundreds of propaganda paintings of Mao, to his breakthrough painting, the hugely successful Standing Guard for the Motherland which made it to the Guggenheim some twenty years after completion&hellip; the self portraits through the years, the epic historical works, eleven times a finalist in the Archibald, runner up in the Doug Moran prize with the portrait of his daughter Sydney, the portrait of Princess Mary, winner of the Sulman Prize\xE2\x80\xA6 Shen Jiawei has defined himself as one of Australia\xE2\x80\x99s prominent portrait painters and is emerging as one of the nation\xE2\x80\x99s most original history painters.</p>\n\n\
+    <p>This beautiful and moving documentary is a \"labour of love\xE2\x80\x9D by Esben Storm, a director best known for television drama and his distinguished feature films including 27A, IN SEARCH OF ANNA and DEADLY. (Ronin website)</p>\n"
+  category: documentaries
+  created_on: 2012-02-06 09:33:29
+  title: GOODBYE REVOLUTION
+  notes: 
   page_id: "2671"
-  director_id: "1"
-  id: "1"
+  country_of_origin: Australia
+  id: "464"
+  year: "2008"
+  notes_markup: ""
+  synopsis: "Shen Jiawei, one of Australia\xE2\x80\x99s foremost painters, was born in Shanghai a year before the Chinese Communist Party came to power in 1949. Forty years later, Shen moved to Australia, at the time of both the Tiananmen Square uprising and the birth of his daughter, Sydney.\n\n\
+    Now, nearly twenty years later - Shen Jiawei is taking us back to China. It is a journey of rediscovery and reflection, a journey through which we\xE2\x80\x99ll get to know and admire a unique and interesting artist. As well, Shen will give us a personal and intimate insight into a China that is still a mystery to most Westerners.\n\n\
+    From being a Red Guard during Mao's Cultural Revolution, to painting tourists at Darling Harbour, to being Artist in Residence at Sydney Grammar, to living near the sunny shores of idyllic Bundeena, Shen Jiawei has come a long way. It is a journey vigorously signposted and reflected through many paintings and photographs.\n\n\
+    From his earliest sketches and teenage watercolours, to the hundreds of propaganda paintings of Mao, to his breakthrough painting, the hugely successful Standing Guard for the Motherland which made it to the Guggenheim some twenty years after completion... the self portraits through the years, the epic historical works, eleven times a finalist in the Archibald, runner up in the Doug Moran prize with the portrait of his daughter Sydney, the portrait of Princess Mary, winner of the Sulman Prize\xE2\x80\xA6 Shen Jiawei has defined himself as one of Australia\xE2\x80\x99s prominent portrait painters and is emerging as one of the nation\xE2\x80\x99s most original history painters.\n\n\
+    This beautiful and moving documentary is a \"labour of love\xE2\x80\x9D by Esben Storm, a director best known for television drama and his distinguished feature films including 27A, IN SEARCH OF ANNA and DEADLY. (Ronin website)"
   site_id: "173"
-director: "yo"
-film:
-page:
-site:
+directions: 
+directors: 
+draft: 
+page: 
+pathprints: 
+production_companies: 
+productions: 
+settings_objects: 
+site: 
+tag_phrase_objects: 
+tags:
