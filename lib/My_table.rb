@@ -1,4 +1,5 @@
-
+require 'rubygems'
+require 'action_controller' # gem, then require stuff
 
 # Class 
 # http://zetcode.com/db/mysqlrubytutorial/
@@ -23,7 +24,7 @@ class My_table
         	local_id INT PRIMARY KEY AUTO_INCREMENT, 
         	position VARCHAR(255),
         	film_id INT(11),
-        	created_on DATE,
+        	created_on DATETIME,
         	
         	page_id INT(11),
         	director_id INT(11),
@@ -40,7 +41,7 @@ class My_table
 					name VARCHAR(255),
 					bio_markup TEXT, 
 					
-					created_on DATE,
+					created_on DATETIME,
 					page_id INT(11),
 					id INT(11),
 					bio TEXT,
@@ -57,7 +58,7 @@ class My_table
 					synopsis_markup TEXT,
 					category VARCHAR(255),
 					
-					created_on DATE,
+					created_on DATETIME,
 					title VARCHAR(255),
 					notes TEXT,
 					page_id VARCHAR(255),
@@ -242,8 +243,19 @@ class My_table
 			# Here we remove <p> </p> around the synopsis_markup
 			# We assume the text is like <p>plain text ....</p>
 			# Work around
-			synopsis_markup = synopsis_markup.gsub(%r{</?[^>]+?>}, '')
-			synopsis_markup = '&lt;p&gt;' + synopsis_markup + '&lt;/p&gt;' 
+			#synopsis_markup = synopsis_markup.gsub(%r{</?[^>]+?>}, '')
+
+			# Synopsis markup
+			synopsis_markup = ActionController::Base.helpers.strip_tags(synopsis_markup)
+			if !synopsis_markup.empty? 
+				synopsis_markup = '&lt;p&gt;' + synopsis_markup + '&lt;/p&gt;'
+			end
+
+			# Note markup, similar as synopsis markup
+			notes_markup = ActionController::Base.helpers.strip_tags(notes_markup)
+			if !notes_markup.empty?
+				notes_markup = '&lt;p&gt;' + notes_markup + '&lt;/p&gt;'
+			end
 
 		  stmt.execute(
 				slug,
@@ -272,23 +284,6 @@ class My_table
     end
 
 	end # End insert_AacflmFilm
-	
-
-=begin	
-	def my_conv(s)
-		s = s.gsub("\xe2\x80\x9c", '"')
-    s = s.gsub("\xe2\x80\x9d", '"')
-    s = s.gsub("\xe2\x80\x98", "'")
-    s = s.gsub("\xe2\x80\x99", "'")
-    s = s.gsub("\xe2\x80\x93", "-")
-    s = s.gsub("\xe2\x80\x94", "--")
-    s = s.gsub("\xe2\x80\xa6", "...")
-    #s = Iconv.conv('UTF-8//IGNORE', 'UTF-8', s)
-		s = s.encode('UTF-16', :invalid => :replace, :replace => '').encode('UTF-8')
-	
-		return s
-	end
-=end	
 	
 end # End class
 

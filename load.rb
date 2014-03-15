@@ -89,9 +89,6 @@ YAML::load_stream(site_path) { |doc|
 		synopsis = doc.attributes['synopsis']
 		site_id = doc.attributes['site_id']
 		
-		#test
-		#puts synopsis_markup.encoding
-		
 		my_table.insert_AacflmFilm slug, synopsis_markup, category, created_on, title, notes, page_id, country_of_origin, id, year, notes_markup, synopsis, site_id
 			
 	else
