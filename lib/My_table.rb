@@ -18,6 +18,7 @@ class My_table
     	con = Mysql.new @host, @user, @pass, @db 
 		
 			# ENGINE=InnoDB DEFAULT CHARSET=utf8?
+			# AacflmDirection
 			con.query("
       	CREATE TABLE IF NOT EXISTS \
       	AacflmDirection(
@@ -33,6 +34,7 @@ class My_table
       	) ENGINE=InnoDB DEFAULT CHARSET=utf8
     	")
 		
+			# AacflmDirector
 			con.query("
         CREATE TABLE IF NOT EXISTS \
         AacflmDirector(
@@ -50,6 +52,7 @@ class My_table
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8
       ")
 
+			# AacflmFilm
     	con.query("
         CREATE TABLE IF NOT EXISTS \
         AacflmFilm(
@@ -73,12 +76,47 @@ class My_table
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8
       ")
     	
+    	# AacflmProduction (i.e. relation of film and production company)
+			con.query("
+        CREATE TABLE IF NOT EXISTS \
+        AacflmProduction(
+          local_id INT PRIMARY KEY AUTO_INCREMENT, 
+         	position INT(11),
+         	film_id INT(11),
+         	created_on DATETIME,
+         	
+         	page_id INT(11),
+         	production_company_id INT(11),
+         	id INT(11),
+         	site_id INT(11)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+      ")
+		
+			#AacflmProductionCompany	
+			con.query("
+        CREATE TABLE IF NOT EXISTS \
+        AacflmProductionCompany(
+        	local_id INT PRIMARY KEY AUTO_INCREMENT,
+          description_markup TEXT,
+					slug VARCHAR(255),
+					name VARCHAR(255),
+					
+					created_on DATETIME,
+					page_id INT(11),
+					id INT(11),
+					description TEXT,
+					site_id INT(11)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+      ")
+		
 		
 			# Truncate table
 			con.query("TRUNCATE TABLE AacflmDirection")	
 			con.query("TRUNCATE TABLE AacflmDirector")
 			con.query("TRUNCATE TABLE AacflmFilm")
+			con.query("TRUNCATE TABLE AacflmProduction")
 			
+			con.query("TRUNCATE TABLE AacflmProductionCompany")
 
   	rescue Mysql::Error => e
     	puts e.errno
@@ -87,6 +125,31 @@ class My_table
   	ensure
     	con.close if con
   	end
+	end
+
+	def remove_all_tables
+		begin
+      con = Mysql.new @host, @user, @pass, @db
+
+		  stmt = con.prepare("DROP TABLE AacflmDirection")
+		  stmt.execute()
+		  
+		  stmt = con.prepare("DROP TABLE AacflmDirector")
+		  stmt.execute()
+		  
+		  stmt = con.prepare("DROP TABLE AacflmFilm")
+		  stmt.execute()
+		  
+		  stmt = con.prepare("DROP TABLE AacflmProduction")
+		  stmt.execute()
+
+		rescue Mysql::Error => e
+      puts e.errno
+      puts e.error
+
+    ensure
+      con.close if con
+    end
 	end
 
 
@@ -282,8 +345,115 @@ class My_table
     ensure
       con.close if con
     end
-
 	end # End insert_AacflmFilm
+	
+	
+	def insert_AacflmProduction(position, film_id, created_on, page_id, production_company_id, id, site_id)
+		begin
+      con = Mysql.new @host, @user, @pass, @db
+
+		  stmt = con.prepare("
+				INSERT INTO \
+				AacflmProduction
+				(
+					position,
+					film_id,
+					created_on,
+					page_id,
+		
+					production_company_id,
+					id,
+					site_id
+				)	
+				VALUES
+				(
+					?,				
+					?,
+					?,
+					?,
+
+					?,
+					?,
+					?
+				)
+			")
+
+		  stmt.execute(
+				position,
+				film_id,
+				created_on,
+				page_id,
+	
+				production_company_id,
+				id,
+				site_id	
+			)
+
+		rescue Mysql::Error => e
+      puts e.errno
+      puts e.error
+
+    ensure
+      con.close if con
+    end
+	
+	end # End insert_AacflmProduction
+	
+	
+	# insert_AacflmProductionCompany
+	def insert_AacflmProductionCompany(description_markup, slug, name, created_on, page_id, id, description, site_id)
+		begin
+      con = Mysql.new @host, @user, @pass, @db
+
+		  stmt = con.prepare("
+				INSERT INTO \
+				AacflmProductionCompany
+				(
+					description_markup,
+					slug,
+					name,
+					created_on,
+					
+					page_id,
+					id,
+					description,
+					site_id
+				)	
+				VALUES
+				(
+					?,				
+					?,
+					?,
+					?,
+
+					?,
+					?,
+					?,
+					?
+				)
+			")
+
+		  stmt.execute(
+				description_markup,
+				slug,
+				name,
+				created_on,
+				
+				page_id,
+				id,
+				description,
+				site_id	
+			)
+
+		rescue Mysql::Error => e
+      puts e.errno
+      puts e.error
+
+    ensure
+      con.close if con
+    end
+	end # End insert_AacflmProductionCompany
+	
 	
 end # End class
 

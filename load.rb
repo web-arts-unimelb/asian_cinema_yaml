@@ -30,6 +30,8 @@ require 'TagPhrase'
 require 'User'
 
 require 'My_table'
+require 'trollop'
+
 
 #
 host = 'localhost'
@@ -41,6 +43,20 @@ my_table = My_table.new host, user, pass, db
 my_table.create
 
 
+# Receive options
+# Use as --remove-all-tables
+# sample output if true: {:remove_all_tables=>true, :help=>false, :remove_all_tables_given=>true}
+# sample output if false: {:remove_all_tables=>false, :help=>false}
+opts = Trollop::options do
+  opt :remove_all_tables, "Remove all tables", :type => :boolean, :default => false
+end
+
+if opts[:remove_all_tables]
+	my_table.remove_all_tables
+end
+
+
+# Fill tables with data
 SITE_PATH = '/var/www/test/testme/asian_cinema/site.yml'
 site_path = File.open(SITE_PATH)
 YAML::load_stream(site_path) { |doc|
@@ -91,6 +107,32 @@ YAML::load_stream(site_path) { |doc|
 		
 		my_table.insert_AacflmFilm slug, synopsis_markup, category, created_on, title, notes, page_id, country_of_origin, id, year, notes_markup, synopsis, site_id
 			
+	elsif doc.class.to_s == 'AacflmProduction'		
+			
+		position = doc.attributes['position']
+		film_id = doc.attributes['film_id']
+		created_on = doc.attributes['created_on']
+		page_id = doc.attributes['page_id']
+		
+		production_company_id = doc.attributes['production_company_id']
+		id = doc.attributes['id']
+		site_id = doc.attributes['site_id']	
+			
+		my_table.insert_AacflmProduction position, film_id, created_on, page_id, production_company_id, id, site_id
+		
+	elsif doc.class.to_s == 'AacflmProductionCompany' 		
+		
+		description_markup = doc.attributes['description_markup']
+		slug = doc.attributes['slug']
+		name = doc.attributes['name']
+		created_on = doc.attributes['created_on']
+		
+		page_id = doc.attributes['page_id']
+		id = doc.attributes['id']
+		description = doc.attributes['description']
+		site_id = doc.attributes['site_id']
+			
+		my_table.insert_AacflmProductionCompany description_markup, slug, name, created_on, page_id, id, description, site_id 
 	else
 		puts 'last'
 	end
