@@ -132,7 +132,22 @@ YAML::load_stream(site_path) { |doc|
 		description = doc.attributes['description']
 		site_id = doc.attributes['site_id']
 			
-		my_table.insert_AacflmProductionCompany description_markup, slug, name, created_on, page_id, id, description, site_id 
+		my_table.insert_AacflmProductionCompany description_markup, slug, name, created_on, page_id, id, description, site_id
+	
+	elsif doc.class.to_s == 'Tag' 	
+		 
+		slug = doc.attributes['slug']
+		position = doc.attributes['position']
+		phrase = doc.attributes['phrase']
+		id = doc.attributes['id']
+		
+		tag_phrase_id = doc.attributes['tag_phrase_id']
+		taggable_id = doc.attributes['taggable_id']
+		taggable_type = doc.attributes['taggable_type']
+		site_id = doc.attributes['site_id']
+
+		my_table.insert_Tag slug, position, phrase, id, tag_phrase_id, taggable_id, taggable_type, site_id
+		 
 	else
 		puts 'last'
 	end

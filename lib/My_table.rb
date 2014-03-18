@@ -109,6 +109,23 @@ class My_table
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8
       ")
 		
+			#Tag
+			con.query("
+        CREATE TABLE IF NOT EXISTS \
+        Tag(
+        	local_id INT PRIMARY KEY AUTO_INCREMENT,
+          slug VARCHAR(255),
+  				position INT(11),
+  				phrase VARCHAR(255),
+  				
+  				id INT(11),
+  				tag_phrase_id INT(11),
+					taggable_id INT(11),
+					taggable_type VARCHAR(255),
+					site_id INT(11)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+      ")
+		
 		
 			# Truncate table
 			con.query("TRUNCATE TABLE AacflmDirection")	
@@ -117,6 +134,7 @@ class My_table
 			con.query("TRUNCATE TABLE AacflmProduction")
 			
 			con.query("TRUNCATE TABLE AacflmProductionCompany")
+			con.query("TRUNCATE TABLE Tag")
 
   	rescue Mysql::Error => e
     	puts e.errno
@@ -453,6 +471,61 @@ class My_table
       con.close if con
     end
 	end # End insert_AacflmProductionCompany
+	
+	
+	# insert_Tag
+	def insert_Tag(slug, position, phrase, id, tag_phrase_id, taggable_id, taggable_type, site_id)
+		begin
+      con = Mysql.new @host, @user, @pass, @db
+
+		  stmt = con.prepare("
+				INSERT INTO \
+				Tag
+				(
+					slug,
+					position,
+					phrase,
+					id,
+					
+					tag_phrase_id,
+					taggable_id,
+					taggable_type,
+					site_id
+				)	
+				VALUES
+				(
+					?,				
+					?,
+					?,
+					?,
+
+					?,
+					?,
+					?,
+					?
+				)
+			")
+
+		  stmt.execute(
+				slug,
+				position,
+				phrase,
+				id,
+				
+				tag_phrase_id,
+				taggable_id,
+				taggable_type,
+				site_id	
+			)
+
+		rescue Mysql::Error => e
+      puts e.errno
+      puts e.error
+
+    ensure
+      con.close if con
+    end
+	end # End insert_Tag
 	
 	
 end # End class
