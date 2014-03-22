@@ -134,7 +134,7 @@ YAML::load_stream(site_path) { |doc|
 			
 		my_table.insert_AacflmProductionCompany description_markup, slug, name, created_on, page_id, id, description, site_id
 	
-	elsif doc.class.to_s == 'Tag' 	
+	elsif doc.class.to_s == 'Tag'
 		 
 		slug = doc.attributes['slug']
 		position = doc.attributes['position']
@@ -150,7 +150,14 @@ YAML::load_stream(site_path) { |doc|
 		 
 	else
 		puts 'last'
-	end
-		 
+	end 
 }
 
+# The category seems missing in the yml file, so I create my own
+my_table.insert_category(nil, 'asian_features', 'Asian Features')
+my_table.insert_category(nil, 'australian_features', 'Australian Features')
+my_table.insert_category(nil, 'documentaries', 'Documentaries')
+my_table.insert_category(nil, 'other_films', 'Other Films')
+
+my_table.insert_category(nil, 'shorts', 'Short')
+my_table.insert_category(nil, 'tv', 'TV')

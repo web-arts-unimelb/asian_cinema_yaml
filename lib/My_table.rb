@@ -126,6 +126,17 @@ class My_table
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8
       ")
 		
+			#Category
+			#It is not in the yml file, so I create my own
+			con.query("
+        CREATE TABLE IF NOT EXISTS \
+        Category(
+        	local_id INT PRIMARY KEY AUTO_INCREMENT,
+          id INT(11),
+          slug VARCHAR(255),
+					name VARCHAR(255)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+      ")
 		
 			# Truncate table
 			con.query("TRUNCATE TABLE AacflmDirection")	
@@ -135,6 +146,7 @@ class My_table
 			
 			con.query("TRUNCATE TABLE AacflmProductionCompany")
 			con.query("TRUNCATE TABLE Tag")
+			con.query("TRUNCATE TABLE Category")
 
   	rescue Mysql::Error => e
     	puts e.errno
@@ -526,6 +538,42 @@ class My_table
       con.close if con
     end
 	end # End insert_Tag
+	
+	
+	def insert_category(id, slug, name)
+		begin
+      con = Mysql.new @host, @user, @pass, @db
+
+		  stmt = con.prepare("
+				INSERT INTO \
+				Category
+				(
+          id,
+          slug,
+					name
+				)	
+				VALUES
+				(
+					?,				
+					?,
+					?
+				)
+			")
+
+		  stmt.execute(
+				id,
+				slug,
+				name
+			)
+
+		rescue Mysql::Error => e
+      puts e.errno
+      puts e.error
+
+    ensure
+      con.close if con
+    end
+	end # End category
 	
 	
 end # End class
