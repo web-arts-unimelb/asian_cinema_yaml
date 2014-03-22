@@ -39,7 +39,7 @@ foreach ($results as $row) {
 	
 	$part_year = '<strong>Year: </strong> '. $year. "<br/>";
 	$part_category = '<strong>Category: </strong> '. $category_slug. "<br/>";
-	$part_film_name = '<strong>Film name: </strong><a href="list_flim.php?film_id='. $film_id. '">'. $film_title. '</a><br/>';
+	$part_film_name = '<strong>Film name: </strong><a href="list_film.php?film_id='. $film_id. '">'. $film_title. '</a><br/>';
 	$part_director_name = '<strong>Director name: </strong> '. $director_name. "<br/>";
 	
 	$output = $part_year. $part_category. $part_film_name. $part_director_name. "<br/>============<br/>";
