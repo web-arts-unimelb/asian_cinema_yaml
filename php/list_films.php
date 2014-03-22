@@ -4,7 +4,7 @@ include_once('lib.php');
 $sql = "
 	SELECT
 		AacflmFilm.id,
-		AacflmFilm.category,
+		Category.name as category,
 		AacflmFilm.year,
 		AacflmFilm.title AS film_title,
 	 
@@ -19,6 +19,10 @@ $sql = "
 		AacflmFilm
 	ON
 		AacflmDirection.film_id = AacflmFilm.id
+	INNER JOIN
+		Category
+	ON
+		AacflmFilm.category = Category.slug
 	ORDER BY
 		AacflmFilm.title	
 ";
