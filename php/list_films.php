@@ -10,21 +10,21 @@ $sql = "
 	 
 		AacflmDirector.name AS director_name
 	FROM 
-		AacflmDirector
-	INNER JOIN 
+		AacflmFilm
+	LEFT JOIN 
 		AacflmDirection
 	ON 
-		AacflmDirector.id = AacflmDirection.director_id
-	INNER JOIN
-		AacflmFilm
-	ON
 		AacflmDirection.film_id = AacflmFilm.id
-	INNER JOIN
+	LEFT JOIN
+		AacflmDirector
+	ON
+		AacflmDirector.id = AacflmDirection.director_id
+	LEFT JOIN
 		Category
 	ON
-		AacflmFilm.category = Category.slug
+		AacflmFilm.category = Category.slug	
 	ORDER BY
-		AacflmFilm.title	
+		AacflmFilm.title
 ";
 
 $results = DB::query($sql);

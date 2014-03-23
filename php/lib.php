@@ -1,6 +1,7 @@
 <?php
 
+require_once 'config.php';
 require_once 'meekrodb.2.2.class.php';
-DB::$user = 'root';
-DB::$password = '11111111';
-DB::$dbName = 'asian_cinema';
+DB::$user = $db_user;
+DB::$password = $db_password;
+DB::$dbName = $db_name;
