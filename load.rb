@@ -32,12 +32,13 @@ require 'User'
 require 'My_table'
 require 'trollop'
 
-
-#
-host = 'localhost'
-user = 'root'
-pass = '11111111'
-db = 'asian_cinema'
+# Need to specify local
+require './config'
+include CONFIG
+host = MYCONFIG['host']
+user = MYCONFIG['user']
+pass = MYCONFIG['pass']
+db = MYCONFIG['db']
 
 my_table = My_table.new host, user, pass, db 
 my_table.create

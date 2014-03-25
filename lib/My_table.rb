@@ -289,7 +289,12 @@ class My_table
 	end # End insert_AacflmDirector
 	
 	
-	def insert_AacflmFilm(slug, synopsis_markup, category, created_on, title, notes, page_id, country_of_origin, id, year, notes_markup, synopsis, site_id)	
+	def insert_AacflmFilm(slug, synopsis_markup, category, created_on, title, notes, page_id, country_of_origin, id, year, notes_markup, synopsis, site_id)
+	
+		# Title in all capital, so make it readable
+		title = title.downcase
+		title = title.split(' ').select {|w| w.capitalize! || w }.join(' ');
+	
 		begin
       con = Mysql.new @host, @user, @pass, @db
 
