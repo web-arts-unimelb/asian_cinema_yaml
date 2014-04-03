@@ -343,17 +343,17 @@ class My_table
 			# Work around
 			#synopsis_markup = synopsis_markup.gsub(%r{</?[^>]+?>}, '')
 
-			# Synopsis markup
-			synopsis_markup = ActionController::Base.helpers.strip_tags(synopsis_markup)
-			if !synopsis_markup.empty? 
-				synopsis_markup = '&lt;p&gt;' + synopsis_markup + '&lt;/p&gt;'
-			end
+			## Synopsis markup
+			#synopsis_markup = ActionController::Base.helpers.strip_tags(synopsis_markup)
+			#if !synopsis_markup.empty? 
+			#	synopsis_markup = '&lt;p&gt;' + synopsis_markup + '&lt;/p&gt;'
+			#end
 
-			# Note markup, similar as synopsis markup
-			notes_markup = ActionController::Base.helpers.strip_tags(notes_markup)
-			if !notes_markup.empty?
-				notes_markup = '&lt;p&gt;' + notes_markup + '&lt;/p&gt;'
-			end
+			## Note markup, similar as synopsis markup
+			#notes_markup = ActionController::Base.helpers.strip_tags(notes_markup)
+			#if !notes_markup.empty?
+			#	notes_markup = '&lt;p&gt;' + notes_markup + '&lt;/p&gt;'
+			#end
 
 		  stmt.execute(
 				slug,
