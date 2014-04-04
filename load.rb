@@ -160,5 +160,5 @@ my_table.insert_category(nil, 'australian_features', 'Australian Features')
 my_table.insert_category(nil, 'documentaries', 'Documentaries')
 my_table.insert_category(nil, 'other_films', 'Other Films')
 
-my_table.insert_category(nil, 'shorts', 'Short')
+my_table.insert_category(nil, 'shorts', 'Shorts')
 my_table.insert_category(nil, 'tv', 'TV')
